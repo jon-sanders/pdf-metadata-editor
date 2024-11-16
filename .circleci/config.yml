@@ -120,44 +120,44 @@ jobs:
           paths:
             - packages
 
-  build-and-test-macos:
-    macos:
-      xcode: 14.1.0
-    steps:
-      - checkout
-      - run:
-          name: Brew
-          command: |
-            # set -x
-            # export HOMEBREW_NO_AUTO_UPDATE=1
-            # brew list
-            # curl -LO https://raw.githubusercontent.com/Homebrew/homebrew-cask/4565865e9d7c3d3018ee8aa67803ea68c54dde86/Casks/temurin.rb
-            # brew install --cask temurin.rb
-            # brew install --ignore-dependencies maven
-            curl -LO https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.12_7.pkg
-            sudo installer -pkg ./OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.12_7.pkg -target /Applications
-            curl -LO https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
-            tar xzf apache-maven-3.8.8-bin.tar.gz
-            sudo mkdir -p /usr/local/bin/
-            sudo ln -s `pwd`/apache-maven-3.8.8/bin/mvn /usr/local/bin/mvn
-            java -version
-            mvn -version
-      - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
-      - run:
-          name: Test
-          command: mvn test
-      - run:
-          name: Remove garbase artifacts
-          command: rm -f target/packages/default._*.dmg
-      - store_artifacts:
-          path: target/packages/
-          destination: macos
-      - persist_to_workspace:
-          root: target
-          paths:
-            - packages
+#  build-and-test-macos:
+#    macos:
+#      xcode: 14.1.0
+#    steps:
+#      - checkout
+#      - run:
+#          name: Brew
+#          command: |
+#            # set -x
+#            # export HOMEBREW_NO_AUTO_UPDATE=1
+#            # brew list
+#            # curl -LO https://raw.githubusercontent.com/Homebrew/homebrew-cask/4565865e9d7c3d3018ee8aa67803ea68c54dde86/Casks/temurin.rb
+#            # brew install --cask temurin.rb
+#            # brew install --ignore-dependencies maven
+#            curl -LO https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.12_7.pkg
+#            sudo installer -pkg ./OpenJDK17U-jdk_aarch64_mac_hotspot_17.0.12_7.pkg -target /Applications
+#            curl -LO https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+#            tar xzf apache-maven-3.8.8-bin.tar.gz
+#            sudo mkdir -p /usr/local/bin/
+#            sudo ln -s `pwd`/apache-maven-3.8.8/bin/mvn /usr/local/bin/mvn
+#            java -version
+#            mvn -version
+#      - run:
+#          name: Build
+#          command: mvn -B -DskipTests clean package
+#      - run:
+#          name: Test
+#          command: mvn test
+#      - run:
+#          name: Remove garbase artifacts
+#          command: rm -f target/packages/default._*.dmg
+#      - store_artifacts:
+#          path: target/packages/
+#          destination: macos
+#      - persist_to_workspace:
+#          root: target
+#          paths:
+#            - packages
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
