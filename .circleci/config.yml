@@ -189,12 +189,12 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - build-and-test-macos:
-          filters:  # required since `publish-github-release` has tag filters AND requires `build`
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+#      - build-and-test-macos:
+#          filters:  # required since `publish-github-release` has tag filters AND requires `build`
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /.*/
       - publish-github-release:
           requires:
             - build-and-test-linux
